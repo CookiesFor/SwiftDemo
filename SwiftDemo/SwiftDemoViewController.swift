@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 
 let SwiftDemoCellID = "SwiftDemoCell"
+let SwiftDemoSecondCellID = "SwiftDemoSecondCell"
 
 
 class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
@@ -18,6 +19,8 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
     
     
     var dataSource:NSMutableArray = []
+    
+    var orderIDSource:NSMutableArray = []
     
     
     let table:UITableView = UITableView(frame:UIScreen.mainScreen().bounds,style:UITableViewStyle.Plain)
@@ -34,7 +37,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         table.delegate = self
         table.separatorStyle = UITableViewCellSeparatorStyle.None
         table .registerNib(UINib(nibName: SwiftDemoCellID, bundle:nil), forCellReuseIdentifier: SwiftDemoCellID)
-        
+        table .registerNib(UINib(nibName: SwiftDemoSecondCellID,bundle:nil), forCellReuseIdentifier: SwiftDemoSecondCellID)
         
         loadData()
         
@@ -47,7 +50,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         
         let url = "http://ceshi21.kuaikuaipaobei.com/api/order_record.php?action=list"
         
-        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"551"]
+        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"D5D6C909BC5A830CCB7633F1AE7FB7A5"]
         
         
         Alamofire
@@ -72,12 +75,21 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
                         
                         print("123\(dataDict)")
                         
+                        self.orderIDSource .addObject((dataDict as! [String : AnyObject])["order_sn"]!)
+//                        orderIDSource .addObject(dataDict["order_id"])
                         let model:SwiftDemoModel = SwiftDemoModel()
                         
                         model .setValuesForKeysWithDictionary(dataDict as! [String : AnyObject])
                         
-                    model .setValue(NSNumber.init(float: Float(SwiftDemoCell .heightWithModel(model))) , forKey: "height")
-                        
+                        if model.order_type .intValue==2||model.order_type .intValue==6 {
+                            
+                           model .setValue(NSNumber.init(float: Float(SwiftDemoCell .heightWithModel(model))) , forKey: "height")
+                            
+                        }else{
+                            
+                         model .setValue(NSNumber.init(float: Float(SwiftDemoSecondCell .heightWithModel(model))) , forKey: "height")
+                        }
+
                         self.dataSource.addObject(model)
                         
                     }
@@ -100,31 +112,34 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
     }
     //创建cell
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+
         let model:SwiftDemoModel =  dataSource[indexPath.row] as! SwiftDemoModel
         
         
-        let cell:SwiftDemoCell = SwiftDemoCell(style: UITableViewCellStyle.Default, reuseIdentifier: SwiftDemoCellID)
-        cell._model = model
-        cell.sendSubviewToBack(cell.bgIMGView)
-//        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        cell .setModel(model)
+        if model.order_type .intValue==2||model.order_type .intValue==6 {
+            
+            let cell:SwiftDemoCell = SwiftDemoCell(style: UITableViewCellStyle.Default, reuseIdentifier: SwiftDemoCellID)
+            cell._model = model
+            cell.sendSubviewToBack(cell.bgIMGView)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell .setModel(model)
+            return cell
         
-//        let title :String = Source[indexPath.row].0
-//        cell.textLabel!.text = title
-//        
-//        //每一行有一个按钮
-//        let btn:UIButton = UIButton(type: UIButtonType.Custom)
-//        btn.frame = CGRectMake(UIScreen.mainScreen().bounds.width-100, 10, 80, 50)
-//        btn.setTitle("下载", forState: UIControlState.Normal)
-//        btn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-//        btn.backgroundColor = UIColor.redColor()
-//        btn.tag = indexPath.row
-//        btn.addTarget(self, action: #selector(SwiftDemoViewController.btnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-//        
-//        cell.contentView.addSubview(btn)
+        }else{
+            
+            
+            let cell:SwiftDemoSecondCell = SwiftDemoSecondCell(style: UITableViewCellStyle.Default,reuseIdentifier: SwiftDemoSecondCellID)
+            cell.selectionStyle  = UITableViewCellSelectionStyle.None
+            cell._model = model
+            cell.sendSubviewToBack(cell.bgIMGView)
+            cell .setModel(model)
+            
+            return cell
         
-        return cell
+        }
+
+        
+       
         
     }
     
@@ -139,18 +154,18 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         return CGFloat(model.height .floatValue)
         
     }
+
     
-    
-//    func btnClick(sender:UIButton) {
-//        
-//        
-//        let btn = self.view .viewWithTag(sender.tag) as? UIButton
-//        
-//        print(btn)
-//        
-//        print("你点击的是第\(sender.tag)个cell上的button");
-//        
-//    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        let orderDetailViewController = OrderDetailViewController()
+        orderDetailViewController.orderID = orderIDSource[indexPath.row] as! NSString
+        self.navigationController!.pushViewController(orderDetailViewController, animated: false)
+        
+        
+        
+    }
     
     
     override func didReceiveMemoryWarning() {

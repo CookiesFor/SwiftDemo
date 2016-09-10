@@ -24,6 +24,8 @@ class SwiftDemoModel: NSObject {
     var order_sn:NSString
     var order_type:NSString
     var receive_time:NSString
+    var goods_moeny:NSString
+    var is_show_money:NSString
     
     
     override init() {
@@ -41,7 +43,8 @@ class SwiftDemoModel: NSObject {
         self.order_sn = ""
         self.order_type = ""
         self.receive_time = ""
-        
+        self.goods_moeny = ""
+        self.is_show_money = ""
     }
     
     override func valueForUndefinedKey(key: String) -> AnyObject? {

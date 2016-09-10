@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 
-
 class SwiftDemoCell: UITableViewCell {
     
     //发货地
@@ -35,6 +34,8 @@ class SwiftDemoCell: UITableViewCell {
     var orderButton:UIButton = UIButton()
     //查看路线按钮
     var roadButton:UIButton = UIButton()
+    //分类图标
+    var iconImgView:UIImageView = UIImageView()
     
     
     
@@ -81,7 +82,7 @@ class SwiftDemoCell: UITableViewCell {
         addSubview(bgIMGView)
         addSubview(orderButton)
         addSubview(roadButton)
-        
+        addSubview(iconImgView)
         
         titleLabel.numberOfLines = 0
         contentLabel.numberOfLines = 0
@@ -102,13 +103,25 @@ class SwiftDemoCell: UITableViewCell {
             
         }
         
+        let Img:UIImage = UIImage(named: "sendIcon")!
+        
+        
+        //分类图标
+        iconImgView.snp_makeConstraints { (make) in
+            
+            make.top.equalTo(10)
+            make.left.equalTo(10)
+            make.size.equalTo(CGSizeMake(Img.size.width, Img.size.height))
+        }
+        
         //取货时间
         timeLabel.snp_makeConstraints { (make) in
             make.top.equalTo(5)
-            make.left.equalTo(10)
+            make.left.equalTo(iconImgView.snp_right).offset(5)
             make.height.equalTo(35)
             
         }
+        timeLabel.textAlignment = NSTextAlignment.Center
         //配送费
         buyMoneyLabel.snp_makeConstraints { (make) in
             
@@ -139,7 +152,7 @@ class SwiftDemoCell: UITableViewCell {
         adistanceLabel.snp_makeConstraints { (make) in
             
             make.top.equalTo(titleLabel.snp_bottom).offset(5)
-            make.right.equalTo(-5)
+            make.right.equalTo(-15)
             make.height.equalTo(10)
             
         }
@@ -155,7 +168,7 @@ class SwiftDemoCell: UITableViewCell {
         bdistanceLabel.snp_makeConstraints { (make) in
             
             make.top.equalTo(contentLabel.snp_bottom).offset(5)
-            make.right.equalTo(-5)
+            make.right.equalTo(-15)
             make.height.equalTo(10)
             
         }
@@ -170,16 +183,16 @@ class SwiftDemoCell: UITableViewCell {
         }
         
         let w = UIScreen.mainScreen().bounds.size.width
-        titleLabel.preferredMaxLayoutWidth = w-5
-        contentLabel.preferredMaxLayoutWidth = w-5
+        titleLabel.preferredMaxLayoutWidth = w-20
+        contentLabel.preferredMaxLayoutWidth = w-20
         
         
         orderButton.snp_makeConstraints { (make) in
             
             make.top.equalTo(goodsNameLbale.snp_bottom).offset(5)
             make.left.equalTo(6)
-            make.width.equalTo(self.frame.size.width-90)
-            make.height.equalTo(25)
+            make.right.equalTo(-120)
+            make.height.equalTo(35)
             
         }
         orderButton.layer.cornerRadius = 3
@@ -189,8 +202,8 @@ class SwiftDemoCell: UITableViewCell {
             
             make.top.equalTo(orderButton.snp_top).offset(0)
             make.left.equalTo(orderButton.snp_right).offset(3)
-            make.width.equalTo(90)
-            make.height.equalTo(25)
+            make.right.equalTo(-10)
+            make.height.equalTo(35)
             
         }
         roadButton.layer.cornerRadius = 3;
@@ -227,8 +240,8 @@ class SwiftDemoCell: UITableViewCell {
         roadButton .setTitle("查看路线", forState: UIControlState.Normal)
         
         
-        adistanceLabel.text = "距您的距离:  "
-        bdistanceLabel.text = "距发货地距离:  "
+        adistanceLabel.text = "距您的距离:  " + String(format: "%.2f",model.adistance .doubleValue/1000)+"千米"
+        bdistanceLabel.text = "距发货地距离:  " + String(format: "%.2f",model.bdistance .doubleValue/1000)+"千米"
         titleLabel.text = "发:  " +  model.buy_shop_address as String
         contentLabel.text = "收:  "  + model.receive_shop_address as String
         
@@ -240,6 +253,17 @@ class SwiftDemoCell: UITableViewCell {
         {
             timeLabel.text =  SwiftDemoCell .timeStampToString(model.receive_time as String)
         }
+        
+        if model.order_type .isEqual("2") {
+            
+            iconImgView.image = UIImage(named: "sendIcon")
+            
+        }else{
+        
+            iconImgView.image = UIImage(named: "getIcon")
+            
+        }
+
         
         buyMoneyLabel.text = model.buy_money as String + "元"
         

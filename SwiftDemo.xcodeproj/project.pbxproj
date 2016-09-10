@@ -17,6 +17,8 @@
 		B84115F21CDC3EC500F21448 /* MySwiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84115F11CDC3EC500F21448 /* MySwiftCell.swift */; };
 		B84EA0651D81520600325439 /* SwiftDemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84EA0641D81520600325439 /* SwiftDemoCell.swift */; };
 		B84EA0671D81544900325439 /* SwiftDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84EA0661D81544900325439 /* SwiftDemoViewController.swift */; };
+		B86A9A281D83E92B00B50CB1 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86A9A271D83E92B00B50CB1 /* OrderDetailViewController.swift */; };
+		B86A9A2A1D83EFAD00B50CB1 /* OrderDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86A9A291D83EFAD00B50CB1 /* OrderDetailModel.swift */; };
 		B87CA0731D82445F00041EC8 /* SwiftDemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87CA0721D82445F00041EC8 /* SwiftDemoModel.swift */; };
 		B87CA0761D8288A200041EC8 /* NetWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87CA0751D8288A200041EC8 /* NetWork.swift */; };
 		B87CA0791D82BAED00041EC8 /* SwiftDemoSecondCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87CA0781D82BAED00041EC8 /* SwiftDemoSecondCell.swift */; };
@@ -60,9 +62,11 @@
 		B84EA0641D81520600325439 /* SwiftDemoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDemoCell.swift; sourceTree = "<group>"; };
 		B84EA0661D81544900325439 /* SwiftDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDemoViewController.swift; sourceTree = "<group>"; };
 		B85876C81CE1CF8D001206CC /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../SwiftDemo/PrefixHeader.pch; sourceTree = "<group>"; };
+		B86A9A271D83E92B00B50CB1 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
+		B86A9A291D83EFAD00B50CB1 /* OrderDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailModel.swift; sourceTree = "<group>"; };
 		B87CA0721D82445F00041EC8 /* SwiftDemoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDemoModel.swift; sourceTree = "<group>"; };
 		B87CA0741D82879100041EC8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		B87CA0751D8288A200041EC8 /* NetWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetWork.swift; path = ../NetWork.swift; sourceTree = "<group>"; };
+		B87CA0751D8288A200041EC8 /* NetWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWork.swift; sourceTree = "<group>"; };
 		B87CA0781D82BAED00041EC8 /* SwiftDemoSecondCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDemoSecondCell.swift; sourceTree = "<group>"; };
 		DF7D473C420AD9B29060FE36 /* Pods_SwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -97,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				B87CA0741D82879100041EC8 /* PrefixHeader.pch */,
+				B87CA0751D8288A200041EC8 /* NetWork.swift */,
 				B83B5AC21CAE005B00C4EE17 /* SwiftDemo */,
 				B83B5AD71CAE005C00C4EE17 /* SwiftDemoTests */,
 				B83B5AE21CAE005C00C4EE17 /* SwiftDemoUITests */,
@@ -119,14 +124,15 @@
 		B83B5AC21CAE005B00C4EE17 /* SwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
-				B87CA0751D8288A200041EC8 /* NetWork.swift */,
 				B83B5AC31CAE005B00C4EE17 /* AppDelegate.swift */,
 				B83B5AC51CAE005B00C4EE17 /* ViewController.swift */,
 				B84EA0661D81544900325439 /* SwiftDemoViewController.swift */,
 				B84EA0641D81520600325439 /* SwiftDemoCell.swift */,
 				B87CA0781D82BAED00041EC8 /* SwiftDemoSecondCell.swift */,
 				B87CA0721D82445F00041EC8 /* SwiftDemoModel.swift */,
+				B86A9A271D83E92B00B50CB1 /* OrderDetailViewController.swift */,
 				B84115F11CDC3EC500F21448 /* MySwiftCell.swift */,
+				B86A9A291D83EFAD00B50CB1 /* OrderDetailModel.swift */,
 				B83B5AC71CAE005B00C4EE17 /* Main.storyboard */,
 				B83B5ACA1CAE005B00C4EE17 /* Assets.xcassets */,
 				B83B5ACC1CAE005B00C4EE17 /* LaunchScreen.storyboard */,
@@ -353,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86A9A281D83E92B00B50CB1 /* OrderDetailViewController.swift in Sources */,
 				B84EA0651D81520600325439 /* SwiftDemoCell.swift in Sources */,
 				B84115F21CDC3EC500F21448 /* MySwiftCell.swift in Sources */,
 				B87CA0791D82BAED00041EC8 /* SwiftDemoSecondCell.swift in Sources */,
@@ -361,6 +368,7 @@
 				B83B5AC41CAE005B00C4EE17 /* AppDelegate.swift in Sources */,
 				B84EA0671D81544900325439 /* SwiftDemoViewController.swift in Sources */,
 				B87CA0761D8288A200041EC8 /* NetWork.swift in Sources */,
+				B86A9A2A1D83EFAD00B50CB1 /* OrderDetailModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,13 +511,15 @@
 			baseConfigurationReference = 9E100D45B00DF5E4CCF79A1C /* Pods-SwiftDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ruigong Wang (ZXX44WWRJ7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SwiftDemo/PrefixHeader.pch";
 				INFOPLIST_FILE = SwiftDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.SL.-.SwiftDemo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Sppll.fastrun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5615109f-a837-4c8e-94cf-eda2decb87aa";
 			};
 			name = Debug;
 		};
@@ -518,13 +528,16 @@
 			baseConfigurationReference = B388B13525938CA5B404BF27 /* Pods-SwiftDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ruigong Wang (ZXX44WWRJ7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruigong Wang (ZXX44WWRJ7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SwiftDemo/PrefixHeader.pch";
 				INFOPLIST_FILE = SwiftDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.SL.-.SwiftDemo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Sppll.fastrun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5615109f-a837-4c8e-94cf-eda2decb87aa";
 			};
 			name = Release;
 		};
