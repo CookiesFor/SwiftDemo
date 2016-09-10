@@ -32,7 +32,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         self.view.addSubview(table)
         table.dataSource = self
         table.delegate = self
-        
+        table.separatorStyle = UITableViewCellSeparatorStyle.None
         table .registerNib(UINib(nibName: SwiftDemoCellID, bundle:nil), forCellReuseIdentifier: SwiftDemoCellID)
         
         
@@ -105,8 +105,9 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         
         
         let cell:SwiftDemoCell = SwiftDemoCell(style: UITableViewCellStyle.Default, reuseIdentifier: SwiftDemoCellID)
-       cell._model = model
-        
+        cell._model = model
+        cell.sendSubviewToBack(cell.bgIMGView)
+//        cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell .setModel(model)
         
 //        let title :String = Source[indexPath.row].0
@@ -133,7 +134,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         let model:SwiftDemoModel = dataSource[indexPath.row] as! SwiftDemoModel
         
         
-        
+        print( model.height)
         
         return CGFloat(model.height .floatValue)
         

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 
+
 class SwiftDemoCell: UITableViewCell {
     
     //发货地
@@ -28,6 +29,13 @@ class SwiftDemoCell: UITableViewCell {
     var bdistanceLabel:UILabel = UILabel()
     //顶部线
     var topLineView:UIView = UIView()
+    //背景图片
+    var bgIMGView:UIImageView = UIImageView()
+    //接单按钮
+    var orderButton:UIButton = UIButton()
+    //查看路线按钮
+    var roadButton:UIButton = UIButton()
+    
     
     
     
@@ -70,9 +78,10 @@ class SwiftDemoCell: UITableViewCell {
         addSubview(adistanceLabel)
         addSubview(bdistanceLabel)
         addSubview(topLineView)
+        addSubview(bgIMGView)
+        addSubview(orderButton)
+        addSubview(roadButton)
         
-//        titleLabel.backgroundColor = .redColor()
-//        contentLabel.backgroundColor = .greenColor()
         
         titleLabel.numberOfLines = 0
         contentLabel.numberOfLines = 0
@@ -82,10 +91,21 @@ class SwiftDemoCell: UITableViewCell {
         adistanceLabel.numberOfLines = 0
         bdistanceLabel.numberOfLines = 0
         
+        
+        //背景图
+        bgIMGView.snp_makeConstraints { (make) in
+            
+            make.top.equalTo(5)
+            make.left.equalTo(5)
+            make.right.equalTo(-5)
+            make.bottom.equalTo(-5)
+            
+        }
+        
         //取货时间
         timeLabel.snp_makeConstraints { (make) in
-            
-            make.left.top.equalTo(5)
+            make.top.equalTo(5)
+            make.left.equalTo(10)
             make.height.equalTo(35)
             
         }
@@ -95,23 +115,25 @@ class SwiftDemoCell: UITableViewCell {
             make.left.equalTo(timeLabel.snp_right).offset(5)
             make.top.equalTo(5)
             make.height.equalTo(35)
-            make.right.equalTo(-5)
-            
+            make.right.equalTo(-10)
+           
         }
         //顶部线
         topLineView.snp_makeConstraints { (make) in
             
             make.top.equalTo(timeLabel.snp_bottom).offset(5)
-            make.left.right.equalTo(0)
+            make.left.equalTo(5)
+            make.right.equalTo(-5)
+            make.height.equalTo(1)
             
         }
-        topLineView.backgroundColor = .redColor()
+//        topLineView.backgroundColor = .grayColor()
         //发货地
         titleLabel.snp_makeConstraints { (make) in
             
             make.top.equalTo(topLineView.snp_bottom).offset(5)
-            make.left.equalTo(5)
-            make.right.equalTo(-5)
+            make.left.equalTo(10)
+            make.right.equalTo(-10)
         }
         //距您的距离
         adistanceLabel.snp_makeConstraints { (make) in
@@ -124,9 +146,9 @@ class SwiftDemoCell: UITableViewCell {
         //收货地
         contentLabel.snp_makeConstraints { (make) in
             
-            make.left.equalTo(5)
+            make.left.equalTo(10)
             make.top.equalTo(adistanceLabel.snp_bottom).offset(5)
-            make.right.equalTo(self).offset(-5)
+            make.right.equalTo(self).offset(-10)
             
         }
         //距发货地
@@ -141,26 +163,69 @@ class SwiftDemoCell: UITableViewCell {
         goodsNameLbale.snp_makeConstraints { (make) in
             
             make.top.equalTo(bdistanceLabel.snp_bottom).offset(5)
-            make.left.equalTo(5)
-            make.right.equalTo(-1)
-            make.height.equalTo(35)
+            make.left.equalTo(10)
+            make.right.equalTo(-10)
+            make.height.equalTo(25)
            
         }
         
+        let w = UIScreen.mainScreen().bounds.size.width
+        titleLabel.preferredMaxLayoutWidth = w-5
+        contentLabel.preferredMaxLayoutWidth = w-5
+        
+        
+        orderButton.snp_makeConstraints { (make) in
+            
+            make.top.equalTo(goodsNameLbale.snp_bottom).offset(5)
+            make.left.equalTo(6)
+            make.width.equalTo(self.frame.size.width-90)
+            make.height.equalTo(25)
+            
+        }
+        orderButton.layer.cornerRadius = 3
+        orderButton.backgroundColor = .redColor()
+        
+        roadButton.snp_makeConstraints { (make) in
+            
+            make.top.equalTo(orderButton.snp_top).offset(0)
+            make.left.equalTo(orderButton.snp_right).offset(3)
+            make.width.equalTo(90)
+            make.height.equalTo(25)
+            
+        }
+        roadButton.layer.cornerRadius = 3;
+        roadButton.backgroundColor = .redColor()
         
         
         
+        
+        
+
     
     }
     
     
     func setModel(model: SwiftDemoModel) -> Void {
         
-        _model = model
         
-       
+        
+        
+        _model = model
+        bgIMGView.image = UIImage(named: "订单背景")
+       self.backgroundView?.sendSubviewToBack(bgIMGView)
+        
+        
         adistanceLabel.font = UIFont.systemFontOfSize(11)
         bdistanceLabel.font = UIFont.systemFontOfSize(11)
+        goodsNameLbale.font = UIFont.systemFontOfSize(14)
+        timeLabel.font = UIFont.systemFontOfSize(14)
+        contentLabel.font = UIFont.systemFontOfSize(14)
+        titleLabel.font = UIFont.systemFontOfSize(14)
+        buyMoneyLabel.font = UIFont.systemFontOfSize(15)
+        
+        orderButton .setTitle("接单", forState: UIControlState.Normal)
+        roadButton .setTitle("查看路线", forState: UIControlState.Normal)
+        
         
         adistanceLabel.text = "距您的距离:  "
         bdistanceLabel.text = "距发货地距离:  "
@@ -179,7 +244,7 @@ class SwiftDemoCell: UITableViewCell {
         buyMoneyLabel.text = model.buy_money as String + "元"
         
         goodsNameLbale.text = "物品名称:  " + (model.goods_name as String) as String
-    
+        
         
         
     
@@ -193,11 +258,11 @@ class SwiftDemoCell: UITableViewCell {
         cell .setModel(model)
         cell .layoutIfNeeded()
     
-        let frame:CGRect = cell.goodsNameLbale.frame
+        let frame:CGRect = cell.orderButton.frame
     
         print(frame)
     
-        return frame.origin.y+frame.size.height+5
+        return frame.origin.y+frame.size.height+7
         
         
     }
