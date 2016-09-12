@@ -48,7 +48,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func getOrderData() {
         
-        let url = "http://ceshi21.kuaikuaipaobei.com/api/send_order.php?action=selete"
+        let url = HostUrl + "api/send_order.php?action=selete"
         
         let parameter:NSDictionary = ["token":"D5D6C909BC5A830CCB7633F1AE7FB7A5","express_id":"5","order_sn":orderID]
         
