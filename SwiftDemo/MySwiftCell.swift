@@ -61,8 +61,8 @@ class MySwiftCell: UITableViewCell {
             
         }
 
-        leftOrderNameLabel.backgroundColor = UIColor .redColor()
-        rightOrderDetailLabel.backgroundColor = UIColor .redColor()
+//        leftOrderNameLabel.backgroundColor = UIColor .redColor()
+//        rightOrderDetailLabel.backgroundColor = UIColor .redColor()
         let w = UIScreen.mainScreen().bounds.size.width
         rightOrderDetailLabel.preferredMaxLayoutWidth = w-123
  
