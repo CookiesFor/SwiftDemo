@@ -60,9 +60,11 @@ class MySwiftCell: UITableViewCell {
             make.right.equalTo(-10);
             
         }
+
+        leftOrderNameLabel.backgroundColor = UIColor .redColor()
+        rightOrderDetailLabel.backgroundColor = UIColor .redColor()
         let w = UIScreen.mainScreen().bounds.size.width
-//        leftOrderNameLabel.preferredMaxLayoutWidth = w
-        rightOrderDetailLabel.preferredMaxLayoutWidth = w-126
+        rightOrderDetailLabel.preferredMaxLayoutWidth = w-123
  
     }
     
