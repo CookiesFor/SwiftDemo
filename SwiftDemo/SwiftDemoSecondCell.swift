@@ -209,7 +209,7 @@ class SwiftDemoSecondCell: UITableViewCell {
             
             make.top.equalTo(orderButton.snp_top).offset(0)
             make.left.equalTo(orderButton.snp_right).offset(3)
-            make.right.equalTo(-10)
+            make.right.equalTo(-6)
             make.height.equalTo(35)
             
         }

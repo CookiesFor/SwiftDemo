@@ -48,6 +48,8 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         
         table.mj_header = MJRefreshNormalHeader (refreshingBlock: { 
             self.currentPage = 1
+            self.dataSource .removeAllObjects()
+            self.orderIDSource .removeAllObjects()
             self.loadData(self.currentPage)
             
         })
@@ -74,7 +76,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
     //下载数据
     func loadData(pageNumber:NSInteger) -> Void {
         
-        let url = "http://ceshi21.kuaikuaipaobei.com/api/order_record.php?action=list"
+        let url = "api/order_record.php?action=list"
         
         let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"D5D6C909BC5A830CCB7633F1AE7FB7A5","page":pageNumber]
         

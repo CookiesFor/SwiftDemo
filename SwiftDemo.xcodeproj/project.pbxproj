@@ -18,6 +18,7 @@
 		B84EA0651D81520600325439 /* SwiftDemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84EA0641D81520600325439 /* SwiftDemoCell.swift */; };
 		B84EA0671D81544900325439 /* SwiftDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84EA0661D81544900325439 /* SwiftDemoViewController.swift */; };
 		B85B727F1D8636CD00918CEA /* BridgeFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B85B727E1D8636CD00918CEA /* BridgeFile.m */; };
+		B85B72831D868C6400918CEA /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B72821D868C6400918CEA /* Url.swift */; };
 		B86A9A281D83E92B00B50CB1 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86A9A271D83E92B00B50CB1 /* OrderDetailViewController.swift */; };
 		B86A9A2A1D83EFAD00B50CB1 /* OrderDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86A9A291D83EFAD00B50CB1 /* OrderDetailModel.swift */; };
 		B87CA0731D82445F00041EC8 /* SwiftDemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87CA0721D82445F00041EC8 /* SwiftDemoModel.swift */; };
@@ -66,6 +67,7 @@
 		B85B727C1D8636CD00918CEA /* SwiftDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		B85B727D1D8636CD00918CEA /* BridgeFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeFile.h; sourceTree = "<group>"; };
 		B85B727E1D8636CD00918CEA /* BridgeFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeFile.m; sourceTree = "<group>"; };
+		B85B72821D868C6400918CEA /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		B86A9A271D83E92B00B50CB1 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
 		B86A9A291D83EFAD00B50CB1 /* OrderDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailModel.swift; sourceTree = "<group>"; };
 		B87CA0721D82445F00041EC8 /* SwiftDemoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDemoModel.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		B83B5AB71CAE005900C4EE17 = {
 			isa = PBXGroup;
 			children = (
+				B85B72821D868C6400918CEA /* Url.swift */,
 				B87CA0751D8288A200041EC8 /* NetWork.swift */,
 				B83B5AC21CAE005B00C4EE17 /* SwiftDemo */,
 				B83B5AD71CAE005C00C4EE17 /* SwiftDemoTests */,
@@ -371,6 +374,7 @@
 				B87CA0731D82445F00041EC8 /* SwiftDemoModel.swift in Sources */,
 				B83B5AC61CAE005B00C4EE17 /* ViewController.swift in Sources */,
 				B83B5AC41CAE005B00C4EE17 /* AppDelegate.swift in Sources */,
+				B85B72831D868C6400918CEA /* Url.swift in Sources */,
 				B84EA0671D81544900325439 /* SwiftDemoViewController.swift in Sources */,
 				B87CA0761D8288A200041EC8 /* NetWork.swift in Sources */,
 				B86A9A2A1D83EFAD00B50CB1 /* OrderDetailModel.swift in Sources */,

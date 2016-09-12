@@ -100,15 +100,37 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
 
                     }else{
                     
-                        let alertView:UIAlertView = UIAlertView()
-                        alertView.title = "系统提示"
-                        alertView.message = "请重新登录"
-                        alertView.addButtonWithTitle("取消")
-                        alertView.addButtonWithTitle("确定")
-                        alertView.cancelButtonIndex=0
-                        alertView.delegate=self;
-                        alertView.alertViewStyle = UIAlertViewStyle.Default
-                        alertView.show()
+                        
+                        let alertController = UIAlertController (title: "", message: "请重新登录", preferredStyle: UIAlertControllerStyle.Alert)
+                        let cancelAction = UIAlertAction (title: "取消", style: UIAlertActionStyle.Default, handler: { (action) in
+                            
+                            print("点击了取消")
+                            
+                            
+                        })
+                        
+                        let sureAction = UIAlertAction (title: "确定", style: UIAlertActionStyle.Default, handler: { (action) in
+                            
+                            print("点击了确定")
+                            
+                            
+                        })
+                        
+                        alertController .addAction(cancelAction)
+                        alertController .addAction(sureAction)
+                        
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                        
+                        
+//                        let alertView:UIAlertView = UIAlertView()
+//                        alertView.title = "系统提示"
+//                        alertView.message = "请重新登录"
+//                        alertView.addButtonWithTitle("取消")
+//                        alertView.addButtonWithTitle("确定")
+//                        alertView.cancelButtonIndex=0
+//                        alertView.delegate=self;
+//                        alertView.alertViewStyle = UIAlertViewStyle.Default
+//                        alertView.show()
                     }
                     
                 }
@@ -116,12 +138,12 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        
-        print("点击")
-        
-        
-    }
+//    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+//        
+//        print("点击")
+//        
+//        
+//    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
