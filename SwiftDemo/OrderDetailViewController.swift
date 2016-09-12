@@ -13,7 +13,7 @@ let MySwiftCellID = "MySwiftCell"
 
 
 
-class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
     var orderID:NSString = NSString()
 
@@ -64,42 +64,64 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                     return
                 }
                 if let value = response.result.value {
-
-                    
-                    let data:NSDictionary = value["data"] as!NSDictionary
                     
                     
-                    print(data)
-                    
-                    self.SourceData .addObject(["sign":"1","name":"订单编号","intro":data["order_sn"] as!NSString])
-                    self.SourceData .addObject(["sign":"1","name": "发布时间","intro": data["pay_time"] as!NSString])
-                    self.SourceData .addObject(["sign":"2","name":"取货地址","intro":data["send_shop_address"] as!NSString])
-                    self.SourceData .addObject(["sign":"2","name":"收货地址","intro":data["receive_shop_address"] as!NSString])
-                    self.SourceData .addObject(["sign":"4","name":"物品名称","intro":data["goods_name"] as!NSString])
-                    self.SourceData .addObject(["sign":"4","name":"取货时间","intro":data["receive_time"] as!NSString])
-                    self.SourceData .addObject(["sign":"4","name":"配送要求","intro":data["remark"] as!NSString])
-                    self.SourceData .addObject(["sign":"41","name":"配送费","intro":data["send_money"] as!NSString])
-                    
-                    
-                    print(self.SourceData)
-                    
-                    
-                    
-                    for dataDict in self.SourceData{
+                    if ("\(value["code"] as?NSNumber)" == "200") {
                         
-                        let model:OrderDetailModel = OrderDetailModel()
-                        model.rightContent = dataDict["intro"] as! NSString
-                        model.leftTitle = dataDict["name"] as! NSString
-                        model .setValue(NSNumber.init(float: Float(MySwiftCell .heightWithModel(model))) , forKey: "height")
+                        let data:NSDictionary = value["data"] as!NSDictionary
+                        
+                        
+                        print(data)
+                        
+                        self.SourceData .addObject(["sign":"1","name":"订单编号","intro":data["order_sn"] as!NSString])
+                        self.SourceData .addObject(["sign":"1","name": "发布时间","intro": data["pay_time"] as!NSString])
+                        self.SourceData .addObject(["sign":"2","name":"取货地址","intro":data["send_shop_address"] as!NSString])
+                        self.SourceData .addObject(["sign":"2","name":"收货地址","intro":data["receive_shop_address"] as!NSString])
+                        self.SourceData .addObject(["sign":"4","name":"物品名称","intro":data["goods_name"] as!NSString])
+                        self.SourceData .addObject(["sign":"4","name":"取货时间","intro":data["receive_time"] as!NSString])
+                        self.SourceData .addObject(["sign":"4","name":"配送要求","intro":data["remark"] as!NSString])
+                        self.SourceData .addObject(["sign":"41","name":"配送费","intro":data["send_money"] as!NSString])
+                        
+                        
+                        print(self.SourceData)
+                        
+                        
+                        
+                        for dataDict in self.SourceData{
+                            
+                            let model:OrderDetailModel = OrderDetailModel()
+                            model.rightContent = dataDict["intro"] as! NSString
+                            model.leftTitle = dataDict["name"] as! NSString
+                            model .setValue(NSNumber.init(float: Float(MySwiftCell .heightWithModel(model))) , forKey: "height")
+                            
+                            self.dataMary .addObject(model)
+                        }
+                        self.detailTableView .reloadData()
 
-                        self.dataMary .addObject(model)
+                    }else{
+                    
+                        let alertView:UIAlertView = UIAlertView()
+                        alertView.title = "系统提示"
+                        alertView.message = "请重新登录"
+                        alertView.addButtonWithTitle("取消")
+                        alertView.addButtonWithTitle("确定")
+                        alertView.cancelButtonIndex=0
+                        alertView.delegate=self;
+                        alertView.alertViewStyle = UIAlertViewStyle.Default
+                        alertView.show()
                     }
-                    self.detailTableView .reloadData()
+                    
                 }
         }
         
     }
     
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
+        print("点击")
+        
+        
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         

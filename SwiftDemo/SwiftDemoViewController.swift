@@ -52,7 +52,6 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
             
         })
         table.mj_header .beginRefreshing()
-//        loadData(currentPage)
         
         
         let footer:MJRefreshAutoNormalFooter = MJRefreshAutoNormalFooter (refreshingTarget: self, refreshingAction: #selector(SwiftDemoViewController.loadDataMore))
@@ -82,7 +81,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         SVProgressHUD .showWithStatus("加载数据...")
         
         Alamofire
-            .request(.GET, url, parameters: parameter as? [String : AnyObject])
+            .request(.POST, url, parameters: parameter as? [String : AnyObject])
             .responseJSON { (response) in
                
                 print(response)
