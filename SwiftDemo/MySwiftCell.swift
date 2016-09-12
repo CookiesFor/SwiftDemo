@@ -83,6 +83,15 @@ class MySwiftCell: UITableViewCell {
         }
         
         
+        if model.leftTitle .isEqual("发布时间") {
+            
+            rightOrderDetailLabel.text = SwiftDemoCell .timeStampToString(model.rightContent as String)
+            
+        }
+        
+        
+        
+        
     }
     
     class func heightWithModel(model:OrderDetailModel) -> CGFloat {

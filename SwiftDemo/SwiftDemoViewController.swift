@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MJRefresh
+import SVProgressHUD
 
 let SwiftDemoCellID = "SwiftDemoCell"
 let SwiftDemoSecondCellID = "SwiftDemoSecondCell"
@@ -54,10 +55,11 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
 //        loadData(currentPage)
         
         
-        table.mj_footer = MJRefreshAutoNormalFooter (refreshingTarget: self, refreshingAction: #selector(SwiftDemoViewController.loadDataMore))
-        
-        
-        
+        let footer:MJRefreshAutoNormalFooter = MJRefreshAutoNormalFooter (refreshingTarget: self, refreshingAction: #selector(SwiftDemoViewController.loadDataMore))
+        footer .setTitle("", forState: MJRefreshState .Idle)
+        footer .setTitle("Loading more...", forState: MJRefreshState .Refreshing)
+        footer .setTitle("NO more data...", forState: MJRefreshState .NoMoreData)
+        table.mj_footer = footer
         
         
     }
@@ -77,6 +79,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         
         let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"D5D6C909BC5A830CCB7633F1AE7FB7A5","page":pageNumber]
         
+        SVProgressHUD .showWithStatus("加载数据...")
         
         Alamofire
             .request(.GET, url, parameters: parameter as? [String : AnyObject])
@@ -85,6 +88,8 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
                 print(response)
                 
                 guard response.result.isSuccess else {
+                    
+                    SVProgressHUD .showErrorWithStatus("加载失败...")
                     
                     return
                 }
@@ -101,7 +106,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
                         print("123\(dataDict)")
                         
                         self.orderIDSource .addObject((dataDict as! [String : AnyObject])["order_sn"]!)
-//                        orderIDSource .addObject(dataDict["order_id"])
+
                         let model:SwiftDemoModel = SwiftDemoModel()
                         
                         model .setValuesForKeysWithDictionary(dataDict as! [String : AnyObject])
@@ -118,6 +123,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
                         self.dataSource.addObject(model)
                         
                     }
+                    SVProgressHUD .dismiss()
                     print(self.dataSource)
 
                     }

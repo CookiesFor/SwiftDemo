@@ -240,8 +240,8 @@ class SwiftDemoCell: UITableViewCell {
         roadButton .setTitle("查看路线", forState: UIControlState.Normal)
         
         
-        adistanceLabel.text = "距您的距离:  " + String(format: "%.2f",model.adistance .doubleValue/1000)+"千米"
-        bdistanceLabel.text = "距发货地距离:  " + String(format: "%.2f",model.bdistance .doubleValue/1000)+"千米"
+        adistanceLabel.text = "距您:  " + String(format: "%.2f",model.adistance .doubleValue/1000)+"千米"
+        bdistanceLabel.text = "距发货地:  " + String(format: "%.2f",model.bdistance .doubleValue/1000)+"千米"
         titleLabel.text = "发:  " +  model.buy_shop_address as String
         contentLabel.text = "收:  "  + model.receive_shop_address as String
         
@@ -298,7 +298,7 @@ class SwiftDemoCell: UITableViewCell {
         
         var timeSta:NSTimeInterval = string.doubleValue
         var dfmatter = NSDateFormatter()
-        dfmatter.dateFormat="yyyy年MM月dd日"
+        dfmatter.dateFormat="yyyy年MM月dd日  HH时mm分"
         
         var date = NSDate(timeIntervalSince1970: timeSta)
         
