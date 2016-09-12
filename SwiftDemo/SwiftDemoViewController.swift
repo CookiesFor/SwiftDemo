@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import MJRefresh
 
 let SwiftDemoCellID = "SwiftDemoCell"
 let SwiftDemoSecondCellID = "SwiftDemoSecondCell"
@@ -21,6 +22,8 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
     var dataSource:NSMutableArray = []
     
     var orderIDSource:NSMutableArray = []
+    
+    var currentPage:NSInteger = NSInteger()
     
     
     let table:UITableView = UITableView(frame:UIScreen.mainScreen().bounds,style:UITableViewStyle.Plain)
@@ -39,18 +42,40 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         table .registerNib(UINib(nibName: SwiftDemoCellID, bundle:nil), forCellReuseIdentifier: SwiftDemoCellID)
         table .registerNib(UINib(nibName: SwiftDemoSecondCellID,bundle:nil), forCellReuseIdentifier: SwiftDemoSecondCellID)
         
-        loadData()
+       currentPage = 1
+        
+        
+        table.mj_header = MJRefreshNormalHeader (refreshingBlock: { 
+            self.currentPage = 1
+            self.loadData(self.currentPage)
+            
+        })
+        table.mj_header .beginRefreshing()
+//        loadData(currentPage)
+        
+        
+        table.mj_footer = MJRefreshAutoNormalFooter (refreshingTarget: self, refreshingAction: #selector(SwiftDemoViewController.loadDataMore))
+        
+        
+        
         
         
     }
 
+    func loadDataMore() -> Void {
+        
+        currentPage += 1
+        loadData(currentPage)
+        
+    }
+    
     
     //下载数据
-    func loadData() -> Void {
+    func loadData(pageNumber:NSInteger) -> Void {
         
         let url = "http://ceshi21.kuaikuaipaobei.com/api/order_record.php?action=list"
         
-        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"D5D6C909BC5A830CCB7633F1AE7FB7A5"]
+        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"D5D6C909BC5A830CCB7633F1AE7FB7A5","page":pageNumber]
         
         
         Alamofire
@@ -97,6 +122,8 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
 
                     }
                 self.table .reloadData()
+                self.table.mj_header .endRefreshing()
+                self.table.mj_footer .endRefreshing()
                 }
         }
 
