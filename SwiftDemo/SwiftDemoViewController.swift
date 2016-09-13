@@ -78,7 +78,7 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         
         let url = HostUrl + "api/order_record.php?action=list"
         
-        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"D2FB247AEE1FAE05A1132DE83F2BE4CD","page":pageNumber]
+        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"BD1472296601854E579052CAE1E16190","page":pageNumber]
         
         SVProgressHUD .showWithStatus("加载数据...")
         

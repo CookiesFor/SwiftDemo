@@ -45,6 +45,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         detailTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         detailTableView.delegate = self
         detailTableView.dataSource = self
+        detailTableView.translatesAutoresizingMaskIntoConstraints = false
         detailTableView .registerNib(UINib(nibName: MySwiftCellID,bundle:nil), forCellReuseIdentifier: MySwiftCellID)
         
         getOrderData()
@@ -56,7 +57,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let url = HostUrl + "api/send_order.php?action=selete"
         
-        let parameter:NSDictionary = ["token":"D2FB247AEE1FAE05A1132DE83F2BE4CD","express_id":"5","order_sn":orderID]
+        let parameter:NSDictionary = ["token":"BD1472296601854E579052CAE1E16190","express_id":"5","order_sn":orderID]
         
         
         Alamofire
@@ -214,11 +215,18 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        
-        
-      }
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        
+//        print(scrollView)
+//        let sectionHeaderHeight:CGFloat = 35
+//        if scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0 {
+//            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//        }
+//        else if scrollView.contentOffset.y>=sectionHeaderHeight {
+//            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//        }
+//        
+//      }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
