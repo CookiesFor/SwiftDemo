@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 let MySwiftCellID = "MySwiftCell"
 
@@ -26,6 +27,11 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     let _model:OrderDetailModel = OrderDetailModel()
     
+    var signData:NSMutableArray = NSMutableArray()
+    
+    var sectionDataDic:NSMutableDictionary = NSMutableDictionary()
+    
+    var rowData:NSMutableArray = []
     
     
     override func viewDidLoad() {
@@ -36,7 +42,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.backgroundColor = UIColor .whiteColor()
         
         self.view .addSubview(detailTableView)
-//        detailTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        detailTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         detailTableView.delegate = self
         detailTableView.dataSource = self
         detailTableView .registerNib(UINib(nibName: MySwiftCellID,bundle:nil), forCellReuseIdentifier: MySwiftCellID)
@@ -50,14 +56,14 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let url = HostUrl + "api/send_order.php?action=selete"
         
-        let parameter:NSDictionary = ["token":"D5D6C909BC5A830CCB7633F1AE7FB7A5","express_id":"5","order_sn":orderID]
+        let parameter:NSDictionary = ["token":"D2FB247AEE1FAE05A1132DE83F2BE4CD","express_id":"5","order_sn":orderID]
         
         
         Alamofire
             .request(.GET, url, parameters: parameter as? [String : AnyObject])
             .responseJSON { (response) in
                 
-                print(response)
+//                print(response)
                 
                 guard response.result.isSuccess else {
                     
@@ -65,13 +71,17 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 if let value = response.result.value {
                     
+                    let json = JSON(value)
                     
-                    if ("\(value["code"] as?NSNumber)" == "200") {
+                    let codeStr = json["code"]
+                    
+                    
+                    if (codeStr .intValue == 200) {
                         
                         let data:NSDictionary = value["data"] as!NSDictionary
                         
                         
-                        print(data)
+//                        print(data)
                         
                         self.SourceData .addObject(["sign":"1","name":"订单编号","intro":data["order_sn"] as!NSString])
                         self.SourceData .addObject(["sign":"1","name": "发布时间","intro": data["pay_time"] as!NSString])
@@ -80,10 +90,10 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.SourceData .addObject(["sign":"4","name":"物品名称","intro":data["goods_name"] as!NSString])
                         self.SourceData .addObject(["sign":"4","name":"取货时间","intro":data["receive_time"] as!NSString])
                         self.SourceData .addObject(["sign":"4","name":"配送要求","intro":data["remark"] as!NSString])
-                        self.SourceData .addObject(["sign":"41","name":"配送费","intro":data["send_money"] as!NSString])
+                        self.SourceData .addObject(["sign":"4","name":"配送费","intro":data["send_money"] as!NSString])
                         
                         
-                        print(self.SourceData)
+//                        print(self.SourceData)
                         
                         
                         
@@ -95,7 +105,50 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                             model .setValue(NSNumber.init(float: Float(MySwiftCell .heightWithModel(model))) , forKey: "height")
                             
                             self.dataMary .addObject(model)
+                            
+                            
+                            if !self.signData .containsObject(dataDict["sign"] as! NSString) {
+                            
+                                self.signData .addObject(dataDict["sign"] as! NSString)
+                                
+                            }
+                            
+                            print(self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString))
+                            
+                            let sectionStr = self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString)
+                            print(sectionStr)
+                            if ((sectionStr) != nil){
+                            
+                                let arr:NSMutableArray = self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString) as! NSMutableArray
+                                
+                                arr .addObject(model)
+                            
+                            }else
+                            {
+                                let arr:NSMutableArray = NSMutableArray()
+                                self.sectionDataDic .setObject(arr, forKey: dataDict["sign"] as! NSString)
+                                
+                                arr .addObject(model)
+                                
+                                
+                            }
+                            
                         }
+                        
+                        
+                        for index in 0 ..< self.signData.count {
+                            
+                            print(self.sectionDataDic)
+                            print(self.signData)
+                            
+                            print(self.sectionDataDic[self.signData[index] as! NSString])
+                            
+                            let ar:NSArray = self.sectionDataDic[self.signData[index] as! NSString] as! NSArray
+                            self.rowData .addObject(ar)
+                            print("index is \(self.rowData)")
+                        }
+                        
+                        
                         self.detailTableView .reloadData()
 
                     }else{
@@ -145,19 +198,36 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
 //        
 //    }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return dataMary.count
+        return signData.count
         
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return rowData[section].count
+        
+    }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        
+        
+      }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let model:OrderDetailModel = dataMary[indexPath.row] as! OrderDetailModel
+        print(rowData)
+        
+        let model:OrderDetailModel = rowData[indexPath.section].objectAtIndex(indexPath.row) as! OrderDetailModel
         
         let cell:MySwiftCell = MySwiftCell(style: UITableViewCellStyle.Default,reuseIdentifier: MySwiftCellID)
+        cell.layer.cornerRadius = 3
         cell._model = model
         cell .setModel(model)
         
@@ -167,7 +237,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let model:OrderDetailModel = dataMary[indexPath.row] as! OrderDetailModel
+        let model:OrderDetailModel = rowData[indexPath.section].objectAtIndex(indexPath.row) as! OrderDetailModel
         
         
         print( model.height)
