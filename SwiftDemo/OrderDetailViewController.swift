@@ -64,8 +64,6 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             .request(.GET, url, parameters: parameter as? [String : AnyObject])
             .responseJSON { (response) in
                 
-//                print(response)
-                
                 guard response.result.isSuccess else {
                     
                     return
@@ -81,9 +79,6 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         let data:NSDictionary = value["data"] as!NSDictionary
                         
-                        
-//                        print(data)
-                        
                         self.SourceData .addObject(["sign":"1","name":"订单编号","intro":data["order_sn"] as!NSString])
                         self.SourceData .addObject(["sign":"1","name": "发布时间","intro": data["pay_time"] as!NSString])
                         self.SourceData .addObject(["sign":"2","name":"取货地址","intro":data["send_shop_address"] as!NSString])
@@ -92,11 +87,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.SourceData .addObject(["sign":"4","name":"取货时间","intro":data["receive_time"] as!NSString])
                         self.SourceData .addObject(["sign":"4","name":"配送要求","intro":data["remark"] as!NSString])
                         self.SourceData .addObject(["sign":"4","name":"配送费","intro":data["send_money"] as!NSString])
-                        
-                        
-//                        print(self.SourceData)
-                        
-                        
+
                         
                         for dataDict in self.SourceData{
                             
@@ -109,21 +100,17 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                             
                             if !self.signData .containsObject(dataDict["sign"] as! NSString) {
-                            
+                                
                                 self.signData .addObject(dataDict["sign"] as! NSString)
                                 
                             }
                             
-                            print(self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString))
-                            
-                            let sectionStr = self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString)
-                            print(sectionStr)
-                            if ((sectionStr) != nil){
-                            
+                            if (self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString) != nil){
+                                
                                 let arr:NSMutableArray = self.sectionDataDic .objectForKey(dataDict["sign"] as! NSString) as! NSMutableArray
                                 
                                 arr .addObject(model)
-                            
+                                
                             }else
                             {
                                 let arr:NSMutableArray = NSMutableArray()
@@ -138,22 +125,16 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         
                         for index in 0 ..< self.signData.count {
-                            
-                            print(self.sectionDataDic)
-                            print(self.signData)
-                            
-                            print(self.sectionDataDic[self.signData[index] as! NSString])
-                            
+
                             let ar:NSArray = self.sectionDataDic[self.signData[index] as! NSString] as! NSArray
                             self.rowData .addObject(ar)
-                            print("index is \(self.rowData)")
-                        }
-                        
-                        
-                        self.detailTableView .reloadData()
 
+                        }
+
+                        self.detailTableView .reloadData()
+                        
                     }else{
-                    
+                        
                         
                         let alertController = UIAlertController (title: "", message: "请重新登录", preferredStyle: UIAlertControllerStyle.Alert)
                         let cancelAction = UIAlertAction (title: "取消", style: UIAlertActionStyle.Default, handler: { (action) in
@@ -176,15 +157,15 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.presentViewController(alertController, animated: true, completion: nil)
                         
                         
-//                        let alertView:UIAlertView = UIAlertView()
-//                        alertView.title = "系统提示"
-//                        alertView.message = "请重新登录"
-//                        alertView.addButtonWithTitle("取消")
-//                        alertView.addButtonWithTitle("确定")
-//                        alertView.cancelButtonIndex=0
-//                        alertView.delegate=self;
-//                        alertView.alertViewStyle = UIAlertViewStyle.Default
-//                        alertView.show()
+                        //                        let alertView:UIAlertView = UIAlertView()
+                        //                        alertView.title = "系统提示"
+                        //                        alertView.message = "请重新登录"
+                        //                        alertView.addButtonWithTitle("取消")
+                        //                        alertView.addButtonWithTitle("确定")
+                        //                        alertView.cancelButtonIndex=0
+                        //                        alertView.delegate=self;
+                        //                        alertView.alertViewStyle = UIAlertViewStyle.Default
+                        //                        alertView.show()
                     }
                     
                 }
@@ -215,18 +196,6 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        
-//        print(scrollView)
-//        let sectionHeaderHeight:CGFloat = 35
-//        if scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0 {
-//            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-//        }
-//        else if scrollView.contentOffset.y>=sectionHeaderHeight {
-//            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-//        }
-//        
-//      }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
