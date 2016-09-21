@@ -57,7 +57,7 @@ class OrderDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let url = HostUrl + "api/send_order.php?action=selete"
         
-        let parameter:NSDictionary = ["token":"BD1472296601854E579052CAE1E16190","express_id":"5","order_sn":orderID]
+        let parameter:NSDictionary = ["token":"4840614E949C5EBF91DBA19102033529","express_id":"5","order_sn":orderID]
         
         
         Alamofire

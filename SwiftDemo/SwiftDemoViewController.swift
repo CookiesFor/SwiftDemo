@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MJRefresh
 import SVProgressHUD
-
+import SnapKit
 let SwiftDemoCellID = "SwiftDemoCell"
 let SwiftDemoSecondCellID = "SwiftDemoSecondCell"
 
@@ -26,8 +26,10 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
     
     var currentPage:NSInteger = NSInteger()
     
+    var a:Int = Int()
     
-    let table:UITableView = UITableView(frame:UIScreen.mainScreen().bounds,style:UITableViewStyle.Plain)
+    
+    let table:UITableView = UITableView(frame:CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height-55),style:UITableViewStyle.Plain)
     
     
     
@@ -45,12 +47,24 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         
        currentPage = 1
         
-        
+        a = 1
         table.mj_header = MJRefreshNormalHeader (refreshingBlock: { 
             self.currentPage = 1
             self.dataSource .removeAllObjects()
             self.orderIDSource .removeAllObjects()
-            self.loadData(self.currentPage)
+            
+            if self.a==1 {
+                
+                self.currentPage = 1
+                self.loadData(self.currentPage,list: 1)
+                
+            }else
+            {
+                self.currentPage = 1
+                self.loadData(self.currentPage,list: 2)
+            }
+            
+            
             
         })
         table.mj_header .beginRefreshing()
@@ -62,25 +76,129 @@ class SwiftDemoViewController: UIViewController,UITableViewDataSource,UITableVie
         footer .setTitle("NO more data...", forState: MJRefreshState .NoMoreData)
         table.mj_footer = footer
         
+        createBottomView()
         
     }
 
-    func loadDataMore() -> Void {
+    func rightBottomClick() -> Void {
         
-        currentPage += 1
-        loadData(currentPage)
+        print("right")
+        a = 1
+        table.mj_header .beginRefreshing()
+    }
+    
+    
+    func leftBottomClick() -> Void {
+        
+        print("left")
+//        currentPage = 1
+        a = 2
+        table.mj_header .beginRefreshing()
+    }
+    
+    func createBottomView() -> Void {
+        
+        let leftBottomView:UIView = UIView()
+        self.view .addSubview(leftBottomView)
+        leftBottomView .snp_makeConstraints { (make) in
+            
+            make.top.equalTo(self.table.snp_bottom).offset(0)
+            make.left.equalTo(0)
+            make.width.equalTo(UIScreen.mainScreen().bounds.size.width/2)
+            make.bottom.equalTo(0)
+            
+        }
+        leftBottomView.backgroundColor = .whiteColor()
+        leftBottomView.addGestureRecognizer(UITapGestureRecognizer (target: self, action: #selector(SwiftDemoViewController.leftBottomClick)))
+        
+        
+        
+        let rightBottomView:UIView = UIView()
+        self.view .addSubview(rightBottomView)
+        rightBottomView .snp_makeConstraints { (make) in
+            
+            make.top.equalTo(self.table.snp_bottom).offset(0)
+            make.left.equalTo(leftBottomView.snp_right).offset(1)
+            make.width.equalTo(UIScreen.mainScreen().bounds.size.width/2)
+            make.bottom.equalTo(0)
+            
+        }
+        rightBottomView.backgroundColor = .whiteColor()
+        rightBottomView.addGestureRecognizer(UITapGestureRecognizer (target: self, action: #selector(SwiftDemoViewController.rightBottomClick)))
+        
+        let rightLabel:UILabel = UILabel()
+        rightBottomView .addSubview(rightLabel)
+        rightLabel .snp_makeConstraints { (make) in
+            
+            make.centerX.equalTo(rightBottomView.snp_centerX)
+            make.centerY.equalTo(rightBottomView.snp_centerY)
+            
+        }
+        rightLabel.text = "刷新订单"
+        rightLabel.userInteractionEnabled = true
+        
+        let leftLabel:UILabel = UILabel()
+        rightBottomView .addSubview(leftLabel)
+        leftLabel .snp_makeConstraints { (make) in
+            
+            make.centerX.equalTo(leftBottomView.snp_centerX)
+            make.centerY.equalTo(leftBottomView.snp_centerY)
+            
+        }
+        leftLabel.text = "我的任务"
+        leftLabel.userInteractionEnabled = true
+        
         
     }
     
     
+    
+    func loadDataMore() -> Void {
+        
+        
+        if a==1 {
+            
+            currentPage += 1
+            loadData(currentPage,list: 1)
+            
+        }else
+        {
+            currentPage += 1
+            loadData(currentPage,list: 2)
+        }
+       
+        
+    }
+    
+
+    
     //下载数据
-    func loadData(pageNumber:NSInteger) -> Void {
+    func loadData(pageNumber:NSInteger ,list:NSInteger) -> Void {
+       
+        var url:NSURL = NSURL()
+        var parameter:NSDictionary = NSDictionary()
         
-        let url = HostUrl + "api/order_record.php?action=list"
-        
-        let parameter:NSDictionary = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"BD1472296601854E579052CAE1E16190","page":pageNumber]
+        if list == 1 {
+            
+            let str:String = HostUrl + "api/order_record.php?action=list"
+            url = NSURL(string: str)!
+
+            parameter = ["lng":"113.608634","lat":"34.801111","user_id":"5","token":"4840614E949C5EBF91DBA19102033529","page":pageNumber]
+            
+            
+        }else
+        {
+            let str:String = HostUrl + "/api/order_record.php?action=current_list"
+
+            url = NSURL(string: str)!
+            
+           parameter = ["user_id":"5","token":"4840614E949C5EBF91DBA19102033529","page":pageNumber]
+        }
+
         
         SVProgressHUD .showWithStatus("加载数据...")
+        
+        print(url)
         
         Alamofire
             .request(.POST, url, parameters: parameter as? [String : AnyObject])
